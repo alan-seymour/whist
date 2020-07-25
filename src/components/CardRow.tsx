@@ -1,5 +1,4 @@
 import React, { useMemo, useEffect, useRef } from 'react'
-import { findDOMNode } from 'react-dom'
 import { CardRow as CardRowStyled, CardCount } from './CardRow.styles'
 
 interface Props {

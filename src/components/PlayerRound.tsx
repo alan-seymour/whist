@@ -37,7 +37,7 @@ export const PlayerRound = (props: Props) => {
       updateScore(5 + bid)
       onScoreChange(5 + bid)
     }
-  }, [bid, got, score, runningScore])
+  }, [bid, got, score, runningScore, onScoreChange])
   return (
     <PlayerRoundStyled>
       <PlayerRaw>
@@ -52,6 +52,7 @@ export const PlayerRound = (props: Props) => {
           <UnstyledInput
             onChange={(event: any) => updateGot(parseInput(event.target.value))}
             value={got?.toString() ?? ''}
+            type="number"
           />
         </PlayerGot>
       </PlayerRaw>
