@@ -1,19 +1,28 @@
 import styled from 'styled-components'
 
-export const PadGrid = styled.div<{ playerCount: number }>`
-  display: grid;
-  grid-template-columns: ${props =>
-    `40px repeat( ${props.playerCount * 3}, 30px)`};
-  grid-template-rows: 40px repeat(26, 30px) 40px;
+export const Wrapper = styled.div`
+  display: flex;
+  max-width: 100vw;
 `
 
-export const RoundNumber = styled.div<{ roundNumber: number }>`
-  grid-column: '1 / span 1';
-  grid-row: ${props => `${props.roundNumber * 2 + 2} / span 2`};
-  line-height: '40px';
-  font-weight: bold;
-  line-height: 60px;
-  text-align: center;
-  border: 1px solid #000;
-  border-left: none;
+export const SideBarWrapper = styled.div`
+  flex-shrink: 0;
+  background: #5c6bc0;
+`
+
+export const NextRound = styled.div`
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 1.2em;
+`
+
+export const ScoreWrapper = styled.div`
+  overflow: auto;
+`
+
+export const Scores = styled.div`
+  display: inline-block;
 `

@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from 'react'
-import { BidBox, GotBox, ScoreBox } from './PlayerRound.styles'
-import ContentEditable from 'react-contenteditable'
+import {
+  PlayerRoundStyled,
+  PlayerRaw,
+  PlayerBid,
+  PlayerGot,
+  PlayerTotal,
+  UnstyledInput,
+} from './PlayerRound.styles'
 
 interface Props {
-  playerIndex: number
-  roundNumber: number
   runningScore: number | null
-  onScoreChange: (score: number | null) => void
+  onScoreChange: (score: number) => void
 }
 
 const parseInput = (input: string): number | null => {
   const parsed = parseInt(input, 10)
-  return isNaN(parsed) ? null : parsed
+  return isNaN(parsed) ? 0 : parsed
 }
 
 export const PlayerRound = (props: Props) => {
-  const { playerIndex, roundNumber, runningScore, onScoreChange } = props
+  const { runningScore, onScoreChange } = props
   const [bid, updateBid] = useState<null | number>(null)
   const [got, updateGot] = useState<null | number>(null)
   const [score, updateScore] = useState<null | number>(null)
@@ -24,7 +28,6 @@ export const PlayerRound = (props: Props) => {
     if (bid === null || got === null) {
       if (score !== null) {
         updateScore(null)
-        onScoreChange(null)
       }
     } else if (bid !== got) {
       const diff = Math.abs(bid - got)
@@ -36,22 +39,27 @@ export const PlayerRound = (props: Props) => {
     }
   }, [bid, got, score, runningScore])
   return (
-    <>
-      <BidBox playerIndex={playerIndex} roundNumber={roundNumber}>
-        <ContentEditable
-          onChange={(event: any) => updateBid(parseInput(event.target.value))}
-          html={bid?.toString() ?? ''}
-        />
-      </BidBox>
-      <GotBox playerIndex={playerIndex} roundNumber={roundNumber}>
-        <ContentEditable
-          onChange={(event: any) => updateGot(parseInput(event.target.value))}
-          html={got?.toString() ?? ''}
-        />
-      </GotBox>
-      <ScoreBox playerIndex={playerIndex} roundNumber={roundNumber}>
-        {score !== null && runningScore !== null ? score + runningScore : ''}
-      </ScoreBox>
-    </>
+    <PlayerRoundStyled>
+      <PlayerRaw>
+        <PlayerBid>
+          <UnstyledInput
+            onChange={(event: any) => updateBid(parseInput(event.target.value))}
+            value={bid?.toString() ?? ''}
+            type="number"
+          />
+        </PlayerBid>
+        <PlayerGot>
+          <UnstyledInput
+            onChange={(event: any) => updateGot(parseInput(event.target.value))}
+            value={got?.toString() ?? ''}
+          />
+        </PlayerGot>
+      </PlayerRaw>
+      <PlayerTotal>
+        <div>
+          {score !== null && runningScore !== null ? score + runningScore : ''}
+        </div>
+      </PlayerTotal>
+    </PlayerRoundStyled>
   )
 }
