@@ -10,7 +10,8 @@ import {
 
 interface Props {
   runningScore: number | null
-  onScoreChange: (score: number) => void
+  onScoreChange: (score: number | null) => void
+  score: number | null
 }
 
 const parseInput = (input: string): number | null => {
@@ -19,23 +20,22 @@ const parseInput = (input: string): number | null => {
 }
 
 export const PlayerRound = (props: Props) => {
-  const { runningScore, onScoreChange } = props
+  const { runningScore, score, onScoreChange } = props
   const [bid, updateBid] = useState<null | number>(null)
   const [got, updateGot] = useState<null | number>(null)
-  const [score, updateScore] = useState<null | number>(null)
 
   useEffect(() => {
+    let newScore: number | null = null
     if (bid === null || got === null) {
-      if (score !== null) {
-        updateScore(null)
-      }
+      newScore = null
     } else if (bid !== got) {
       const diff = Math.abs(bid - got)
-      updateScore(0 - 5 - diff)
-      onScoreChange(0 - 5 - diff)
+      newScore = 0 - 5 - diff
     } else if (bid === got) {
-      updateScore(5 + bid)
-      onScoreChange(5 + bid)
+      newScore = 5 + bid
+    }
+    if (newScore !== score) {
+      onScoreChange(newScore)
     }
   }, [bid, got, score, runningScore, onScoreChange])
   return (
@@ -57,9 +57,7 @@ export const PlayerRound = (props: Props) => {
         </PlayerGot>
       </PlayerRaw>
       <PlayerTotal>
-        <div>
-          {score !== null && runningScore !== null ? score + runningScore : ''}
-        </div>
+        <div>{score !== null && runningScore !== null ? runningScore : ''}</div>
       </PlayerTotal>
     </PlayerRoundStyled>
   )
