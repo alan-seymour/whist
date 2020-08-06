@@ -11,7 +11,7 @@ export const PlayerRow = (props: Props) => {
   const rounds = useMemo(() => {
     const rounds = []
     let runningTotal: number | null = 0
-    for (let i = 0; i < props.visibleRounds; i++) {
+    for (let i = 0; i < 13; i++) {
       rounds.push(
         <PlayerRound
           key={i}
@@ -31,7 +31,7 @@ export const PlayerRow = (props: Props) => {
           : null
     }
     return rounds
-  }, [props.visibleRounds, roundScores])
+  }, [roundScores])
 
-  return <PlayerRowStyled>{rounds}</PlayerRowStyled>
+  return <PlayerRowStyled>{rounds.slice(0, visibleRounds)}</PlayerRowStyled>
 }
