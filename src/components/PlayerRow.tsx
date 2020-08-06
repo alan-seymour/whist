@@ -33,5 +33,7 @@ export const PlayerRow = (props: Props) => {
     return rounds
   }, [roundScores])
 
-  return <PlayerRowStyled>{rounds.slice(0, visibleRounds)}</PlayerRowStyled>
+  return (
+    <PlayerRowStyled>{rounds.slice(0, props.visibleRounds)}</PlayerRowStyled>
+  )
 }
