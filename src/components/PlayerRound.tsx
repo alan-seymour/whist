@@ -1,4 +1,3 @@
-import { useState, useEffect, type ChangeEvent } from 'react'
 import {
   PlayerRoundStyled,
   PlayerRaw,
@@ -9,60 +8,48 @@ import {
 } from './PlayerRound.styles'
 
 interface Props {
+  bid: number | null
+  tricks: number | null
   runningScore: number | null
-  onScoreChange: (score: number | null) => void
-  score: number | null
+  onBidChange: (bid: number | null) => void
+  onTricksChange: (tricks: number | null) => void
 }
 
 const parseInput = (input: string): number | null => {
   const parsed = parseInt(input, 10)
-  return isNaN(parsed) ? 0 : parsed
+  return Number.isNaN(parsed) ? null : parsed
 }
 
-export const PlayerRound = (props: Props) => {
-  const { runningScore, score, onScoreChange } = props
-  const [bid, updateBid] = useState<null | number>(null)
-  const [got, updateGot] = useState<null | number>(null)
-
-  useEffect(() => {
-    let newScore: number | null = null
-    if (bid === null || got === null) {
-      newScore = null
-    } else if (bid !== got) {
-      const diff = Math.abs(bid - got)
-      newScore = 0 - 5 - diff
-    } else if (bid === got) {
-      newScore = 5 + bid
-    }
-    if (newScore !== score) {
-      onScoreChange(newScore)
-    }
-  }, [bid, got, score, runningScore, onScoreChange])
-  return (
-    <PlayerRoundStyled>
-      <PlayerRaw>
-        <PlayerBid>
-          <UnstyledInput
-            onChange={(event: ChangeEvent<HTMLInputElement>) =>
-              updateBid(parseInput(event.target.value))
-            }
-            value={bid?.toString() ?? ''}
-            type="number"
-          />
-        </PlayerBid>
-        <PlayerGot>
-          <UnstyledInput
-            onChange={(event: ChangeEvent<HTMLInputElement>) =>
-              updateGot(parseInput(event.target.value))
-            }
-            value={got?.toString() ?? ''}
-            type="number"
-          />
-        </PlayerGot>
-      </PlayerRaw>
-      <PlayerTotal>
-        <div>{score !== null && runningScore !== null ? runningScore : ''}</div>
-      </PlayerTotal>
-    </PlayerRoundStyled>
-  )
-}
+export const PlayerRound = ({
+  bid,
+  tricks,
+  runningScore,
+  onBidChange,
+  onTricksChange,
+}: Props) => (
+  <PlayerRoundStyled>
+    <PlayerRaw>
+      <PlayerBid>
+        <UnstyledInput
+          aria-label="Bid"
+          onChange={event => onBidChange(parseInput(event.target.value))}
+          value={bid ?? ''}
+          type="number"
+          inputMode="numeric"
+        />
+      </PlayerBid>
+      <PlayerGot>
+        <UnstyledInput
+          aria-label="Tricks won"
+          onChange={event => onTricksChange(parseInput(event.target.value))}
+          value={tricks ?? ''}
+          type="number"
+          inputMode="numeric"
+        />
+      </PlayerGot>
+    </PlayerRaw>
+    <PlayerTotal>
+      <div>{runningScore ?? ''}</div>
+    </PlayerTotal>
+  </PlayerRoundStyled>
+)

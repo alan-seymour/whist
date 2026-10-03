@@ -26,3 +26,19 @@ export const ScoreWrapper = styled.div`
 export const Scores = styled.div`
   display: inline-block;
 `
+
+export const RoundButton = styled.button`
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: inherit;
+  padding: 0 8px;
+  height: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  &:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+`
