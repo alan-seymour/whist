@@ -10,6 +10,8 @@ export type GameAction =
   | { type: 'setTricks'; round: number; player: number; tricks: number | null }
   | { type: 'completeRound' }
   | { type: 'goToRound'; round: number }
+  | { type: 'startGame' }
+  | { type: 'finishGame' }
   | { type: 'newGame'; players?: Player[] }
 
 let nextId = 0
@@ -23,6 +25,7 @@ export const createGame = (players?: Player[]): Game => {
     players ??
     Array.from({ length: 4 }, (_, idx) => createPlayer(`Player ${idx + 1}`))
   return {
+    status: 'setup',
     players: initial,
     rounds: createRounds(initial.length),
     currentRound: 0,
@@ -122,7 +125,11 @@ export const gameReducer = (game: Game, action: GameAction): Game => {
       }
     case 'goToRound':
       return { ...game, currentRound: clamp(action.round, 0, ROUND_COUNT - 1) }
+    case 'startGame':
+      return game.status === 'setup' ? { ...game, status: 'playing' } : game
+    case 'finishGame':
+      return game.status === 'playing' ? { ...game, status: 'finished' } : game
     case 'newGame':
-      return createGame(action.players)
+      return createGame(action.players?.map(p => ({ ...p })))
   }
 }

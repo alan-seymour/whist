@@ -1,4 +1,5 @@
-import { Prompt, PromptButton } from './ResumePrompt.styles'
+import { Button } from './Button'
+import styles from './ResumePrompt.module.css'
 
 interface Props {
   onResume: () => void
@@ -6,14 +7,16 @@ interface Props {
 }
 
 export const ResumePrompt = ({ onResume, onNewGame }: Props) => (
-  <Prompt role="dialog" aria-labelledby="resume-title">
-    <h2 id="resume-title">Resume saved game?</h2>
-    <p>There's a game in progress on this device.</p>
-    <PromptButton type="button" onClick={onResume} autoFocus>
+  <main className={styles.prompt} role="dialog" aria-labelledby="resume-title">
+    <h1 id="resume-title" className={styles.title}>
+      Resume saved game?
+    </h1>
+    <p className={styles.text}>There's a game in progress on this device.</p>
+    <Button block onClick={onResume} autoFocus>
       Resume
-    </PromptButton>
-    <PromptButton type="button" onClick={onNewGame} $secondary>
+    </Button>
+    <Button block variant="secondary" onClick={onNewGame}>
       New game
-    </PromptButton>
-  </Prompt>
+    </Button>
+  </main>
 )

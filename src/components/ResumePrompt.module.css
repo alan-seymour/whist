@@ -1,0 +1,16 @@
+.prompt {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 360px;
+  margin: 0 auto;
+  padding: 20vh var(--gutter) 0;
+  text-align: center;
+}
+.title {
+  font-size: 1.4rem;
+}
+.text {
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}

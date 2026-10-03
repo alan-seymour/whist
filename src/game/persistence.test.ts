@@ -31,12 +31,12 @@ describe('persistence', () => {
     expect(loadGame()).toBeNull()
     localStorage.setItem(
       STORAGE_KEY,
-      JSON.stringify({ version: 0, game: createGame() }),
+      JSON.stringify({ version: 1, game: createGame() }),
     )
     expect(loadGame()).toBeNull()
     localStorage.setItem(
       STORAGE_KEY,
-      JSON.stringify({ version: 1, game: { ...createGame(), rounds: [] } }),
+      JSON.stringify({ version: 2, game: { ...createGame(), rounds: [] } }),
     )
     expect(loadGame()).toBeNull()
   })

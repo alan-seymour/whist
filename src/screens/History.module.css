@@ -1,0 +1,102 @@
+.main {
+  padding: 12px 0 24px;
+}
+
+.scroller {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 var(--gutter);
+}
+
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: max-content;
+  min-width: 100%;
+  font-variant-numeric: tabular-nums;
+}
+
+.table th,
+.table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--surface-raised);
+  font-size: 0.8rem;
+}
+
+.nameHead,
+.nameCell {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  text-align: left !important;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  font-weight: 700;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.nameHead {
+  z-index: 3 !important;
+  background: var(--surface-raised);
+}
+
+.rank {
+  display: inline-block;
+  width: 1.5em;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.roundHead {
+  display: table-cell;
+}
+.roundNo {
+  display: block;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+.cards {
+  display: block;
+  font-weight: 700;
+}
+
+.cell {
+  font-size: 0.9rem;
+}
+.points {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-weight: 700;
+}
+.made .points {
+  color: var(--made);
+}
+.missed .points {
+  color: var(--missed);
+}
+.detail,
+.pending {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.totalHead,
+.totalCell {
+  font-weight: 800;
+  background: var(--surface-raised);
+}
+.totalCell {
+  font-size: 1.05rem;
+}

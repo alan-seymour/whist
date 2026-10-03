@@ -1,0 +1,17 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tap);
+  height: var(--tap);
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+}
+.button:not(:disabled):hover {
+  background: var(--surface-raised);
+}
+.button:disabled {
+  opacity: 0.35;
+}

@@ -11,7 +11,10 @@ export interface Round {
   tricks: (number | null)[]
 }
 
+export type GameStatus = 'setup' | 'playing' | 'finished'
+
 export interface Game {
+  status: GameStatus
   players: Player[]
   rounds: Round[]
   /** Index into `rounds` of the round currently being played. */

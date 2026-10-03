@@ -1,0 +1,42 @@
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  min-height: 56px;
+  padding: 6px var(--gutter);
+  padding-top: calc(6px + env(safe-area-inset-top));
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.slot {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: var(--tap);
+}
+.end {
+  justify-content: flex-end;
+}
+
+.titles {
+  text-align: center;
+  min-width: 0;
+}
+
+.title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}

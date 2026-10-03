@@ -12,6 +12,17 @@ describe('gameReducer', () => {
     ])
     expect(game.rounds).toHaveLength(13)
     expect(game.currentRound).toBe(0)
+    expect(game.status).toBe('setup')
+  })
+
+  it('moves from setup to playing to finished', () => {
+    let game = createGame()
+    expect(gameReducer(game, { type: 'finishGame' }).status).toBe('setup')
+    game = gameReducer(game, { type: 'startGame' })
+    expect(game.status).toBe('playing')
+    game = gameReducer(game, { type: 'finishGame' })
+    expect(game.status).toBe('finished')
+    expect(gameReducer(game, { type: 'newGame' }).status).toBe('setup')
   })
 
   it('adds players up to seven', () => {
@@ -101,6 +112,17 @@ describe('gameReducer', () => {
     expect(gameReducer(game, { type: 'completeRound' }).currentRound).toBe(12)
     game = gameReducer(game, { type: 'goToRound', round: -3 })
     expect(game.currentRound).toBe(0)
+    expect(game.status).toBe('setup')
+  })
+
+  it('moves from setup to playing to finished', () => {
+    let game = createGame()
+    expect(gameReducer(game, { type: 'finishGame' }).status).toBe('setup')
+    game = gameReducer(game, { type: 'startGame' })
+    expect(game.status).toBe('playing')
+    game = gameReducer(game, { type: 'finishGame' })
+    expect(game.status).toBe('finished')
+    expect(gameReducer(game, { type: 'newGame' }).status).toBe('setup')
   })
 
   it('starts a new game, optionally keeping the players', () => {

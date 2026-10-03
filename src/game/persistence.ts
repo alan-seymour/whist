@@ -2,7 +2,7 @@ import { ROUND_COUNT } from './rounds'
 import { MAX_PLAYERS, MIN_PLAYERS, type Game } from './types'
 
 export const STORAGE_KEY = 'whist.game'
-const VERSION = 1
+const VERSION = 2
 
 interface Stored {
   version: number
@@ -21,6 +21,8 @@ const isGame = (value: unknown): value is Game => {
   if (count < MIN_PLAYERS || count > MAX_PLAYERS) return false
   if (game.rounds.length !== ROUND_COUNT) return false
   if (typeof game.currentRound !== 'number') return false
+  if (!['setup', 'playing', 'finished'].includes(game.status ?? ''))
+    return false
   return (
     game.players.every(
       p => typeof p?.id === 'string' && typeof p?.name === 'string',
