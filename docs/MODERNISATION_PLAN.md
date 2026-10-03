@@ -30,7 +30,7 @@ locally, which pushes `build/` to the `gh-pages` branch (served at
 6. **Players can be added but not removed** (there's no UI for it), and the player count can't be changed once scores exist.
 7. **Advancing rounds is fiddly.** The "next round" control is a bare SVG with `onClick`: it isn't a button, has no label, is about 16px, and is keyboard-inaccessible. There's no way to go back. The first 3 rounds are visible from the start for no clear reason.
 8. **The layout is fragile.** The names column and the score grid are separate flex trees that line up only because both are hard-coded to 50px + 3px borders. Any font or zoom change breaks the alignment.
-9. **Nothing tells you what's happening.** There's no dealer, trump suit, round number, current leader, or end-of-game result.
+9. **Nothing tells you what's happening.** There's no dealer, round number, record of the trump suit, current leader, or end-of-game result.
 10. **Accessibility.** Inputs have no labels, white on `#5c6bc0` is borderline for contrast, the font is a render-blocking `@import`, and there's no dark mode.
 
 > **Scoring rule** (`PlayerRound.tsx:28-34`): exact bid = `5 + bid`, miss = `-(5 + |bid - got|)`.
@@ -57,9 +57,9 @@ Each phase can ship on its own. Phases 1–2 are the foundation, and Phase 3 is 
 ### Phase 2 – Game model & state (≈ 1 day)
 
 - Add a pure, framework-free module `src/game/`:
-  - `types.ts`: `Game { players: Player[]; rounds: Round[]; settings }`, `Round { cards; trump?; dealer; bids: (number|null)[]; tricks: (number|null)[] }`
+  - `types.ts`: `Game { players: Player[]; rounds: Round[]; settings }`, `Round { cards; trump: Suit | null; dealer; bids: (number|null)[]; tricks: (number|null)[] }`
   - `scoring.ts`: `scoreRound`, `runningTotals`, `standings`, with the rule chosen through `settings`
-  - `rounds.ts`: builds the schedule (7→1→7 by default, or max cards = `floor(52 / players)`), trump rotation and dealer rotation
+  - `rounds.ts`: builds the schedule (7→1→7 by default, or max cards = `floor(52 / players)`), and dealer rotation. Trumps are decided by the deal (e.g. the turned-up card), so they can't be computed: they are entered by hand each round
   - `validation.ts`: bids ≤ cards, tricks sum to cards, optional dealer "hook" rule (bids may not sum to cards)
 - **Unit-test all of it.** This is the logic that matters.
 - Use a single `useReducer` (or a small Zustand store) with actions: `addPlayer`, `removePlayer`, `renamePlayer`, `reorderPlayers`, `setBid`, `setTricks`, `nextRound`, `undo`, `newGame`.
@@ -74,7 +74,8 @@ The app is used on a phone lying on a card table, so design for that: **mobile-f
    - Add, remove, rename (plain `<input>`) and drag-to-reorder players (2–7).
    - Pick the first dealer, rounds pattern and scoring rule, then press "Start game".
 2. **Round screen** (the main screen)
-   - Header: *Round 4 of 13 · 4 cards · Trumps ♠ · Alice deals*.
+   - Header: *Round 4 of 13 · 4 cards · Alice deals*.
+   - **Trumps step:** after the deal, tap the trump suit (♠ ♥ ♦ ♣) in one tap. It then shows in the header and in that round's scoreboard column. It's optional, so it never blocks scoring, and it can be changed later.
    - **Bids step:** one row per player in bidding order (left of dealer first), with −/+ steppers or a number chip row (0…cards). A live "Bids: 3 / 4 cards" counter warns about the hook rule on the dealer.
    - **Tricks step:** the same layout. "Confirm round" is disabled until tricks total the number of cards.
    - After confirming, show a short round summary (✓ made / ✗ missed, ±points), then move to the next round automatically.
