@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { PlayerNames } from './PlayerNames'
 import { PlayerRows } from './PlayerRows'
 import {

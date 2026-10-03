@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect, type ChangeEvent } from 'react'
 import {
   PlayerRoundStyled,
   PlayerRaw,
@@ -43,14 +43,18 @@ export const PlayerRound = (props: Props) => {
       <PlayerRaw>
         <PlayerBid>
           <UnstyledInput
-            onChange={(event: any) => updateBid(parseInput(event.target.value))}
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
+              updateBid(parseInput(event.target.value))
+            }
             value={bid?.toString() ?? ''}
             type="number"
           />
         </PlayerBid>
         <PlayerGot>
           <UnstyledInput
-            onChange={(event: any) => updateGot(parseInput(event.target.value))}
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
+              updateGot(parseInput(event.target.value))
+            }
             value={got?.toString() ?? ''}
             type="number"
           />

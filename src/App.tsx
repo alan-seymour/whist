@@ -1,4 +1,3 @@
-import React from 'react'
 import { Scorepad } from './components/Scorepad'
 
 function App() {

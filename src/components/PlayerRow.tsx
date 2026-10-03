@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import { PlayerRowStyled } from './PlayerRow.styles'
 import { PlayerRound } from './PlayerRound'
 
@@ -13,7 +13,7 @@ export const PlayerRow = (props: Props) => {
     Array(13).fill(null),
   )
   const callback = useCallback(
-    (score, index) =>
+    (score: number | null, index: number) =>
       updateRoundScores([
         ...roundScores.slice(0, index),
         score,

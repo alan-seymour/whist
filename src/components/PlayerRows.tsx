@@ -1,4 +1,3 @@
-import React from 'react'
 import { PlayerRow } from './PlayerRow'
 
 interface Props {

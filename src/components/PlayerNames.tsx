@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { SideBar, Name, AddPlayer } from './PlayerNames.styles'
-import ContentEditable from 'react-contenteditable'
 import { FiPlusCircle } from 'react-icons/fi'
 
 interface Props {
@@ -9,28 +8,27 @@ interface Props {
 }
 
 export const PlayerNames = ({ playerCount, updatePlayerCount }: Props) => {
-  const [playerNames, updatePlayerNames] = useState<string[]>([])
-  useEffect(() => {
-    if (playerCount > playerNames.length) {
-      updatePlayerNames([...playerNames, `Player ${playerNames.length + 1}`])
-    } else if (playerCount < playerNames.length) {
-      updatePlayerNames(playerNames.slice(0, -1))
-    }
-  }, [playerCount, playerNames])
+  const [customNames, updateCustomNames] = useState<Record<number, string>>({})
+  const playerNames = Array.from(
+    { length: playerCount },
+    (_, idx) => customNames[idx] ?? `Player ${idx + 1}`,
+  )
   return (
     <SideBar>
       {playerNames.map((name, idx) => (
         <Name key={idx}>
-          <ContentEditable
-            html={name}
-            onChange={event => {
-              updatePlayerNames([
-                ...playerNames.slice(0, idx),
-                event.target.value,
-                ...playerNames.slice(idx + 1),
-              ])
+          <div
+            contentEditable
+            suppressContentEditableWarning
+            onBlur={event => {
+              updateCustomNames({
+                ...customNames,
+                [idx]: event.currentTarget.textContent ?? '',
+              })
             }}
-          />
+          >
+            {name}
+          </div>
         </Name>
       ))}
       {playerCount < 7 && (

@@ -9,16 +9,16 @@ locally, which pushes `build/` to the `gh-pages` branch (served at
 
 ### Tooling
 
-| Area | Current | Status |
-|---|---|---|
-| Build | `react-scripts` 3.4.1 (webpack 4) | CRA is deprecated. **Confirmed:** `npm run build` fails on Node 22 with `ERR_OSSL_EVP_UNSUPPORTED` |
-| React | 16.13 (`ReactDOM.render`) | Two major versions behind (19) |
-| TypeScript | 3.7 | Current is 5.x |
-| Styling | styled-components 5 | Runtime CSS-in-JS. Fine, but adds weight to a tiny app |
-| Tests | Jest via CRA, **no tests** | — |
-| Lint/format | CRA eslint, Prettier 2 | No CI enforcement |
-| Deploy | `gh-pages` npm package, run by hand | No CI. Dependabot PR #1 (gh-pages 5.0.0) is still open. The `gh-pages` branch has several manual "Create CNAME" commits because earlier deploys wiped the custom domain |
-| PWA | CRA service worker, `unregister()`ed | Manifest, title and theme are still the CRA defaults ("React App") |
+| Area        | Current                              | Status                                                                                                                                                                  |
+| ----------- | ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Build       | `react-scripts` 3.4.1 (webpack 4)    | CRA is deprecated. **Confirmed:** `npm run build` fails on Node 22 with `ERR_OSSL_EVP_UNSUPPORTED`                                                                      |
+| React       | 16.13 (`ReactDOM.render`)            | Two major versions behind (19)                                                                                                                                          |
+| TypeScript  | 3.7                                  | Current is 5.x                                                                                                                                                          |
+| Styling     | styled-components 5                  | Runtime CSS-in-JS. Fine, but adds weight to a tiny app                                                                                                                  |
+| Tests       | Jest via CRA, **no tests**           | —                                                                                                                                                                       |
+| Lint/format | CRA eslint, Prettier 2               | No CI enforcement                                                                                                                                                       |
+| Deploy      | `gh-pages` npm package, run by hand  | No CI. Dependabot PR #1 (gh-pages 5.0.0) is still open. The `gh-pages` branch has several manual "Create CNAME" commits because earlier deploys wiped the custom domain |
+| PWA         | CRA service worker, `unregister()`ed | Manifest, title and theme are still the CRA defaults ("React App")                                                                                                      |
 
 ### Bugs and UX problems in the code
 
@@ -78,7 +78,7 @@ The app is used on a phone lying on a card table, so design for that: **mobile-f
    - Add, remove, rename (plain `<input>`) and reorder players with up/down buttons (2–7).
    - "Start game".
 2. **Round screen** (the main screen, and the only one needed during play)
-   - Header: *Round 4 of 13 · 4 cards*.
+   - Header: _Round 4 of 13 · 4 cards_.
    - **One card per player, all editable at once, in any order.** Each shows the name, a **bid** stepper (−/+, 0…cards), a **tricks** stepper, and the player's **running total** going into this round. Once bid and tricks are both set, the card shows this round's result (✓ +7 / ✗ −6) and the total updates live.
    - A footer line with **Bids: 3 / 4 cards** and **Tricks: 4 / 4 cards**. Tricks not adding up is highlighted, not blocked.
    - "Next round" button, enabled once every player has a bid and tricks. Previous round is a tap away (← / →) so a mistake two rounds ago can be fixed in place; the current round always comes back on load.

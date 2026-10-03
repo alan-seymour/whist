@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useRef } from 'react'
+import { useMemo, useEffect, useRef } from 'react'
 import { CardRow as CardRowStyled, CardCount } from './CardRow.styles'
 
 interface Props {
